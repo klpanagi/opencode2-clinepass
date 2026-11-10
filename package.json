@@ -19,14 +19,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@ai-sdk/openai": "^1.0.0",
+    "@ai-sdk/openai": "^4.0.111",
     "@opencode/plugin": "^2.1.4"
   },
   "peerDependencies": {
     "@opencode/ai": "2.1.4"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "eslint": "^10.14.0"
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5"
   }
 }
