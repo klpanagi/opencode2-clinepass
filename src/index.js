@@ -2,7 +2,6 @@ import { Plugin } from "@opencode/plugin";
 
 const PROVIDER_ID = "clinepass";
 const DEFAULT_BASE_URL = "https://api.cline.bot/v1";
-const DEFAULT_MODEL_ID = "clinepass-default";
 
 export function getApiKey() {
   return process.env.CLINEPASS_API_KEY || process.env.CLINE_API_KEY || "";
@@ -12,7 +11,38 @@ export function getBaseUrl() {
   return process.env.CLINEPASS_BASE_URL || DEFAULT_BASE_URL;
 }
 
+export async function fetchModels(baseUrl = getBaseUrl(), apiKey = getApiKey()) {
+  const res = await fetch(`${baseUrl.replace(/\/$/, "")}/models`, {
+    headers: apiKey ? { Authorization: `Bearer ${apiKey}` } : {},
+  });
+  if (!res.ok) throw new Error(`Failed to fetch models: ${res.status}`);
+  const data = await res.json();
+  const list = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+  return list.map((m) => ({
+    id: m.id,
+    name: m.name || m.id,
+    family: "clinepass",
+    providerID: PROVIDER_ID,
+    api: { id: m.id, url: baseUrl, npm: "@ai-sdk/openai" },
+    capabilities: {
+      temperature: m.capabilities?.temperature ?? true,
+      reasoning: m.capabilities?.reasoning ?? false,
+      attachment: m.capabilities?.attachment ?? false,
+      toolCall: m.capabilities?.toolCall ?? true,
+    },
+    cost: m.cost || { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+    limit: m.limit || { context: 128000, output: 8192 },
+  }));
+}
+
 async function setupV2(ctx) {
+  let models = [];
+  try {
+    models = await fetchModels();
+  } catch (err) {
+    console.warn("[opencode-clinepass] could not fetch models:", err?.message);
+  }
+
   ctx.provider.transform((editor) => {
     const existing = editor.get(PROVIDER_ID);
     if (existing) return;
@@ -24,27 +54,7 @@ async function setupV2(ctx) {
         env: ["CLINEPASS_API_KEY"],
         source: "custom",
       },
-      models: [
-        {
-          id: DEFAULT_MODEL_ID,
-          name: "Clinepass Default",
-          family: "clinepass",
-          providerID: PROVIDER_ID,
-          api: {
-            id: DEFAULT_MODEL_ID,
-            url: getBaseUrl(),
-            npm: "@ai-sdk/openai",
-          },
-          capabilities: {
-            temperature: true,
-            reasoning: false,
-            attachment: false,
-            toolCall: true,
-          },
-          cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
-          limit: { context: 128000, output: 8192 },
-        },
-      ],
+      models,
     });
   });
 
@@ -57,7 +67,7 @@ async function setupV2(ctx) {
         apiKey: getApiKey(),
         baseURL: getBaseUrl(),
       });
-      input.language = openai(input.model?.id || DEFAULT_MODEL_ID);
+      input.language = openai(input.model?.id);
     });
   } catch (err) {
     console.warn("[opencode-clinepass] @ai-sdk/openai not available:", err?.message);
