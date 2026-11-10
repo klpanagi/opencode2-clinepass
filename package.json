@@ -1,17 +1,32 @@
 {
   "name": "opencode2-clinepass",
   "version": "1.0.0",
+  "scripts": {
+    "lint": "eslint src/",
+    "test": "node --test",
+    "build": "node --check src/index.js",
+    "pack:dry": "npm pack --dry-run"
+  },
   "description": "OpenCode v2 plugin for the Clinepass provider",
   "main": "src/index.js",
   "type": "module",
-  "keywords": ["opencode", "plugin", "clinepass", "provider"],
+  "keywords": [
+    "opencode",
+    "plugin",
+    "clinepass",
+    "provider"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@opencode/plugin": "^2.1.4",
-    "@ai-sdk/openai": "^1.0.0"
+    "@ai-sdk/openai": "^1.0.0",
+    "@opencode/plugin": "^2.1.4"
   },
   "peerDependencies": {
     "@opencode/ai": "2.1.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0"
   }
 }

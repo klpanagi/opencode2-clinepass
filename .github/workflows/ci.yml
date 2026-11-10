@@ -15,5 +15,7 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: node --check src/index.js
-      - run: npm pack --dry-run
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+      - run: npm run pack:dry

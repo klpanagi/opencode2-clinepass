@@ -4,11 +4,11 @@ const PROVIDER_ID = "clinepass";
 const DEFAULT_BASE_URL = "https://api.cline.bot/v1";
 const DEFAULT_MODEL_ID = "clinepass-default";
 
-function getApiKey() {
+export function getApiKey() {
   return process.env.CLINEPASS_API_KEY || process.env.CLINE_API_KEY || "";
 }
 
-function getBaseUrl() {
+export function getBaseUrl() {
   return process.env.CLINEPASS_BASE_URL || DEFAULT_BASE_URL;
 }
 
