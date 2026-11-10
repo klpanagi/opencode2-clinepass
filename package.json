@@ -1,0 +1,17 @@
+{
+  "name": "opencode-clinepass",
+  "version": "1.0.0",
+  "description": "OpenCode v2 plugin for the Clinepass provider",
+  "main": "src/index.js",
+  "type": "module",
+  "keywords": ["opencode", "plugin", "clinepass", "provider"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@opencode/plugin": "^2.1.4",
+    "@ai-sdk/openai": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@opencode/ai": "2.1.4"
+  }
+}
