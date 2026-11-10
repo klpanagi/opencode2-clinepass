@@ -8,35 +8,27 @@ OpenCode v2 plugin that registers the **Clinepass** provider.
 npm install opencode-clinepass
 ```
 
-Add to your OpenCode config:
-
 ```jsonc
-{
-  "plugins": ["opencode-clinepass"]
-}
+// opencode.jsonc
+{ "plugins": ["opencode-clinepass"] }
 ```
 
-## Configuration
-
-Set your API key:
+## Configure
 
 ```bash
-export CLINEPASS_API_KEY=your_key_here
-# or
-export CLINE_API_KEY=your_key_here
+export CLINEPASS_API_KEY=your_key_here   # or CLINE_API_KEY
+export CLINEPASS_BASE_URL=https://api.cline.bot/v1  # optional
 ```
 
-Optional base URL override:
+## Develop
 
 ```bash
-export CLINEPASS_BASE_URL=https://api.cline.bot/v1
+npm install
+npm run lint
+npm run build
+npm test
 ```
-
-## Clinepass API
-
-See https://docs.cline.bot/api/overview for the upstream API documentation.
 
 ## License
 
 MIT
-```
