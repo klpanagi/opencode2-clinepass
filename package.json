@@ -1,5 +1,5 @@
 {
-  "name": "opencode-clinepass",
+  "name": "opencode2-clinepass",
   "version": "1.0.0",
   "description": "OpenCode v2 plugin for the Clinepass provider",
   "main": "src/index.js",
