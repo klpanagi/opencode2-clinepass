@@ -15,9 +15,12 @@ npm install opencode-clinepass
 
 ## Configure
 
+Run `/connect` in OpenCode and select **Clinepass**, then paste your API key.
+
+Optional base URL override:
+
 ```bash
-export CLINEPASS_API_KEY=your_key_here   # or CLINE_API_KEY
-export CLINEPASS_BASE_URL=https://api.cline.bot/v1  # optional
+export CLINEPASS_BASE_URL=https://api.cline.bot/v1
 ```
 
 ## Develop
